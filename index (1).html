@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reden Hementera Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portfolio of Reden Hementera: web design and front-end development.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Fragment+Mono&display=swap">
+<style>
+/* Layout: left-aligned oversized name hero, ruled project list with hover reveal, two-column about, big contact line. Light and dark themes. */
+:root {
+  --bg: #EDF0F4;
+  --surface: #FFFFFF;
+  --ink: #101826;
+  --muted: #566274;
+  --line: #CFD6E0;
+  --accent: #2D3BFF;
+  --on-accent: #FFFFFF;
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "Fragment Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E131B; --surface: #151C27; --ink: #E9EDF3; --muted: #9AA6B6; --line: #263142; --accent: #8791FF; --on-accent: #0E131B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E131B; --surface: #151C27; --ink: #E9EDF3; --muted: #9AA6B6; --line: #263142; --accent: #8791FF; --on-accent: #0E131B;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+.wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.mono { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -.02em; }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
+.brand { font-family: var(--f-display); font-weight: 800; font-size: 21px; text-decoration: none; letter-spacing: -.01em; }
+.brand i { font-style: normal; color: var(--accent); }
+nav.links { display: flex; align-items: center; gap: clamp(14px, 3vw, 30px); font-size: 15px; font-weight: 500; }
+nav.links a { text-decoration: none; color: var(--muted); }
+nav.links a:hover { color: var(--ink); }
+.theme { background: none; border: 1px solid var(--line); color: var(--ink); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; }
+.theme:hover { border-color: var(--accent); }
+.theme svg { width: 18px; height: 18px; }
+
+.hero { padding-block: clamp(56px, 11vw, 120px) clamp(48px, 8vw, 88px); }
+.hero .mono { display: flex; align-items: center; gap: 10px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #1FB66B; flex: none; }
+.hero h1 { font-size: clamp(56px, 14vw, 172px); font-weight: 800; line-height: .9; margin: 22px 0 28px; letter-spacing: -.045em; overflow-wrap: anywhere; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lede { font-size: clamp(20px, 2.6vw, 28px); line-height: 1.4; max-width: 30em; margin: 0; font-family: var(--f-display); font-weight: 500; letter-spacing: -.01em; }
+.cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.btn { display: inline-block; font: 600 15px var(--f-body); padding: 15px 26px; border-radius: 999px; text-decoration: none; border: 1.5px solid var(--ink); cursor: pointer; background: none; color: var(--ink); }
+.btn.solid { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn:hover { transform: translateY(-2px); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; margin-top: 64px; border-top: 1px solid var(--line); }
+.facts div { padding: 18px 20px 0 0; display: grid; gap: 4px; }
+.facts b { font-weight: 600; font-size: 17px; }
+
+section { padding-block: clamp(56px, 9vw, 104px); border-top: 1px solid var(--line); }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(36px, 6.5vw, 64px); font-weight: 800; }
+
+.project { display: grid; grid-template-columns: 76px 1fr auto; gap: 8px 24px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+.project:first-of-type { border-top: 1px solid var(--line); }
+.project .tile { width: 76px; height: 76px; border-radius: 14px; display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 26px; color: #fff; }
+.project h3 { font-size: clamp(24px, 3.4vw, 34px); font-weight: 700; }
+.project p { margin: 4px 0 8px; color: var(--muted); max-width: 52ch; font-size: 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .06em; border: 1px solid var(--line); padding: 3px 10px; border-radius: 999px; color: var(--muted); }
+.project .yr { font-family: var(--f-mono); font-size: 13px; color: var(--muted); align-self: start; padding-top: 6px; }
+.project:hover h3 { color: var(--accent); }
+.project > div { min-width: 0; }
+@media (max-width: 600px) {
+  .project { grid-template-columns: 56px 1fr; }
+  .project .tile { width: 56px; height: 56px; font-size: 20px; border-radius: 11px; }
+  .project .yr { grid-column: 2; padding-top: 0; }
+}
+.note { margin: 28px 0 0; color: var(--muted); font-size: 14px; }
+
+.about { display: grid; gap: 48px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .about { grid-template-columns: 1.2fr .8fr; gap: 80px; } }
+.about p { margin: 0 0 20px; max-width: 58ch; }
+.about p:first-child { font-family: var(--f-display); font-size: clamp(22px, 2.8vw, 30px); line-height: 1.35; font-weight: 500; letter-spacing: -.01em; }
+.stack { display: grid; gap: 28px; min-width: 0; }
+.stack h3 { font-size: 15px; font-family: var(--f-mono); font-weight: 400; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-size: 15px; font-weight: 500; }
+.xp { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+.xp li { display: grid; grid-template-columns: 90px 1fr; gap: 12px; font-size: 15.5px; }
+.xp li span:first-child { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); padding-top: 3px; }
+
+.contact h2 { font-size: clamp(44px, 10vw, 120px); font-weight: 800; line-height: .95; letter-spacing: -.04em; max-width: 12em; }
+.contact h2 em { font-style: normal; color: var(--accent); }
+.mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 36px; }
+.mail { font-family: var(--f-mono); font-size: clamp(16px, 2.4vw, 22px); border: 1px dashed var(--line); padding: 12px 18px; border-radius: 10px; overflow-wrap: anywhere; }
+.social { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 28px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 15px; }
+.social b { color: var(--ink); font-weight: 600; }
+footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Reden Hementera<i>.</i></a>
+    <nav class="links" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button class="theme" id="themeBtn" type="button" aria-label="Switch light or dark theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="mono"><span class="dot" aria-hidden="true"></span>Portfolio 2026 · Open for projects</div>
+    <h1>Reden<br>Hemen<em>tera</em></h1>
+    <p class="lede">I design and build websites that load fast, read clearly and are easy to run after launch.</p>
+    <div class="cta">
+      <a class="btn solid" href="#work">See my work</a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+    <div class="facts">
+      <div><span class="mono">Focus</span><b>Front-end and UI design</b></div>
+      <div><span class="mono">Works with</span><b>Small shops, cafés, creators</b></div>
+      <div><span class="mono">Mode</span><b>Freelance, remote-friendly</b></div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head"><h2>Selected work</h2><span class="mono">4 projects</span></div>
+      <a class="project" href="#contact">
+        <div class="tile" style="background:#0D7378" aria-hidden="true">AL</div>
+        <div>
+          <h3>ALON Streetwear</h3>
+          <p>One-page clothing store with a lookbook, product cards, an in-store café menu and a table booking form.</p>
+          <div class="tags"><span>Landing page</span><span>E-commerce</span><span>Responsive</span></div>
+        </div>
+        <span class="yr">2026</span>
+      </a>
+      <a class="project" href="#contact">
+        <div class="tile" style="background:#B4472E" aria-hidden="true">KL</div>
+        <div>
+          <h3>Kuya's Ledger</h3>
+          <p>Budget tracker for allowance and small-business cash flow, built to work well on a phone.</p>
+          <div class="tags"><span>Web app</span><span>JavaScript</span><span>Charts</span></div>
+        </div>
+        <span class="yr">2025</span>
+      </a>
+      <a class="project" href="#contact">
+        <div class="tile" style="background:#3A4BD8" aria-hidden="true">TN</div>
+        <div>
+          <h3>Tala Notes</h3>
+          <p>Quiet note-taking app with tags, search and an offline-first reading view.</p>
+          <div class="tags"><span>UI design</span><span>PWA</span><span>Accessibility</span></div>
+        </div>
+        <span class="yr">2025</span>
+      </a>
+      <a class="project" href="#contact">
+        <div class="tile" style="background:#1D7A4B" aria-hidden="true">BP</div>
+        <div>
+          <h3>Barako Pour</h3>
+          <p>Menu and ordering page for a neighborhood coffee stand, with daily specials and a pickup time picker.</p>
+          <div class="tags"><span>Menu site</span><span>Forms</span><span>Branding</span></div>
+        </div>
+        <span class="yr">2024</span>
+      </a>
+      <p class="note">Sample projects. Replace the names, descriptions and links with your own work.</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <p>I build websites for people who sell things, serve food or share their craft, and I care about the small details that make a page feel finished.</p>
+        <p>Every project starts with a conversation about who visits the site and what they need to do. From there I sketch the layout, set the type and colors, then build it with clean code that loads quickly on a phone.</p>
+        <p>I also hand over sites that are easy to edit, so you can update prices, photos and opening hours without waiting on me.</p>
+      </div>
+      <div class="stack">
+        <div>
+          <h3>Skills</h3>
+          <div class="chips"><span>HTML and CSS</span><span>JavaScript</span><span>Responsive design</span><span>Figma</span><span>Accessibility</span><span>Vercel deploys</span></div>
+        </div>
+        <div>
+          <h3>Experience</h3>
+          <ul class="xp">
+            <li><span>2025 – now</span><span>Freelance web designer and developer</span></li>
+            <li><span>2024</span><span>Front-end intern, local design studio</span></li>
+            <li><span>2022 – 2025</span><span>Self-taught through client and personal projects</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>Have a site in mind? <em>Let's talk.</em></h2>
+      <div class="mailrow">
+        <span class="mail" id="mailText">hementerareden0@gmail.com</span>
+        <button class="btn" type="button" id="copyBtn">Copy email</button>
+      </div>
+      <ul class="social">
+        <li><b>Facebook</b> your page name</li>
+        <li><b>GitHub</b> your username</li>
+        <li><b>LinkedIn</b> your profile</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Reden Hementera. All rights reserved.</span>
+    <span>Replace the sample social handles above before you publish.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById("themeBtn");
+  try { var saved = localStorage.getItem("hementera-theme"); if (saved) root.setAttribute("data-theme", saved); } catch (e) {}
+  btn.addEventListener("click", function () {
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("hementera-theme", next); } catch (e) {}
+  });
+  var copy = document.getElementById("copyBtn");
+  copy.addEventListener("click", function () {
+    var text = document.getElementById("mailText").textContent;
+    function done() { copy.textContent = "Copied"; setTimeout(function () { copy.textContent = "Copy email"; }, 1800); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("mailText"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copy.textContent = "Press copy now"; setTimeout(function () { copy.textContent = "Copy email"; }, 2200);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, fallback); } else { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
